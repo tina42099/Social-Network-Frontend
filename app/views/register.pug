@@ -1,0 +1,41 @@
+extends template
+
+block content
+
+    form
+        .form-box
+            h2 Register
+            .fb-item
+                span Name
+                br
+                input(type='text' name='name' placeholder='Name') 
+            .fb-item
+                span Email
+                br
+                input(type='email' name='email' placeholder='Email')
+            .fb-item
+                span Age
+                br
+                input(type='number' name='age' placeholder='Age') 
+            .fb-item
+                span Gender
+                br
+                input(type='text' name='gender' placeholder='Gender')
+            .fb-item
+                span Address
+                br
+                input(type='address' name='address' placeholder='Address') 
+            .fb-item
+                span Password
+                br
+                input(type='password' name='password' placeholder='******') 
+            .fb-item
+                span Password
+                br
+                input(type='password' name='confirm' placeholder='******') 
+            button#submit(type='button' onclick='register()') Register
+
+
+
+
+

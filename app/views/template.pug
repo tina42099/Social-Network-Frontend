@@ -1,0 +1,28 @@
+doctype html
+html
+  head
+    title= title || "Dorm Delivery"
+    link(rel='stylesheet', href='/stylesheets/style.css')
+    script(src='/js/fetch.js')
+  body
+    block navbar
+        #navbar
+            span Social Network
+            #nb-items
+                a(href='/map')
+                    span map
+                a(href='/login')
+                    span login
+                a(href='/')
+                    span register
+                a(href='/profile')
+                    span profile
+                #nb-profpic
+
+    block content
+    script(src='/js/script.min.js')
+    if token
+        script localStorage.token = "#{token}"
+    block postScript
+    if dev
+        script(src='//localhost:10000/livereload.js')
