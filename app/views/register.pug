@@ -2,7 +2,7 @@ extends template
 
 block content
 
-    form(onsubmit="return register()")
+    form
         .form-box
             h2 Register
             .fb-item
@@ -33,7 +33,7 @@ block content
                 span Password
                 br
                 input(type='password' name='confirm' placeholder='******') 
-            button#submit(type='submit') Register
+            button#submit(type='button' onclick='register()') Register
 
 
 
