@@ -7,6 +7,13 @@ router.get('/', (req, res, next) => {
     return res.render('register');
 });
 
+router.post('/register', (req, res, next) => {
+	request.post({
+		url: config.apiUrl + '/users',
+		form: req.body
+	}).pipe(res)
+})
+
 router.get('/login', (req, res, next) => {
 	return res.render('login')
 })
