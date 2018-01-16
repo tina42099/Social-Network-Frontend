@@ -33,6 +33,14 @@ router.get('/map', (req, res, next) => {
 	return res.render('map')
 })
 
+router.get('/city', (req, res, next) => {
+	return res.render('city')
+})
+
+router.get('/test', (req, res, next) => {
+	return res.render('test')
+})
+
 router.post('/register', (req, res, next) => {
 	request.post({
 		url: config.apiUrl + '/users',

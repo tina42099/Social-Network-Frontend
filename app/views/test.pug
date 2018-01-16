@@ -1,0 +1,61 @@
+extends template
+
+block content
+	#mapcard
+		br
+		h1 City Name
+		br
+		#map.smaller
+			script.
+				var map;
+				function initMap() {
+					map = new google.maps.Map(document.getElementById('map'), {
+						center: { lat: 36.0907578, lng: -119.5948303 },
+						zoom: 7
+					}); 
+					infoWindow = new google.maps.InfoWindow;
+
+					var service = new google.maps.places.PlacesService(map)
+
+					request = {
+						location: new google.maps.LatLng(36.0907578, -119.5948303)
+							radius: '500',
+							type: ['restaurant']
+					}
+
+					service.nearbySearch(request, callback)
+
+					infoWindow.open(map)
+				}
+
+					
+					
+
+					function callback(results, status) {
+						if (status == google.maps.places.PlacesServiceStatus.OK) {
+								for (var i = 0; i < results.length; i++) {
+										var place = results[i]
+										createMarker(results[i])
+									}
+							}
+					}
+
+					function createMarker(place) {
+						var placeLoc = place.geometry.location;
+						var marker = new google.maps.Marker({
+							map: map,
+							position: place.geometry.location
+						})
+
+						google.maps.event.addListener(marker, 'click', function() {
+							infowindow.setContent(place.name);
+							infowindow.open(map, this);
+						})
+					}
+
+			script(src='https://maps.googleapis.com/maps/api/js?key=AIzaSyBlqJr-U0LGs5Ec4Yhd4aOXNt7p0X4MpyA&callback=initMap')
+		br
+		h3 Activities/Description
+		h8 Recent Visitors
+
+			//- https://developers.google.com/maps/documentation/javascript/places
