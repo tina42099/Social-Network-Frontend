@@ -34,6 +34,7 @@ function register() {
   }).catch(function(err) {
     console.error(err)
   })
+  return false;
 }
 
 function login() {

@@ -18,6 +18,13 @@ router.get('/login', (req, res, next) => {
 	return res.render('login')
 })
 
+router.post('/login', (req, res, next) => {
+	request.post({
+		url: config.apiUrl + '/auth/login',
+		form: req.body
+	}).pipe(res)
+})
+
 router.get('/profile', (req, res, next) => {
 	return res.render('profile')
 })
