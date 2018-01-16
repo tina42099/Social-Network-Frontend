@@ -40,4 +40,19 @@ router.post('/register', (req, res, next) => {
 	}).pipe(res)
 })
 
+router.post('/addFriend', (req, res, next) => {
+	request.post({
+		url: config.apiUrl + 'users/addFriend',
+		form: req.body
+	}).pipe(res)
+})
+
+router.post('/addInterests', (req, res, next) => {
+	request.post({
+		url: config.apiUrl + 'users/addInterests',
+		form: req.body
+	}).pipe(res)
+})
+
+
 module.exports = router;

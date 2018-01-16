@@ -34,7 +34,6 @@ function register() {
   }).catch(function(err) {
     console.error(err)
   })
-  return false;
 }
 
 function login() {
@@ -44,6 +43,69 @@ function login() {
   }
 
   fetch('/login', {
+    headers: {
+      'Content-Type': 'application/json'
+      'x-access-token': localStorage.token
+    },
+    method: 'POST',
+    body: JSON.stringify(data)
+  }).then(function(res) {
+    console.log(res)
+    // if (!res.ok) { alert('Error') }
+    if (!res.ok) {
+      res.text().then(function(message) {
+        alert(message)
+      })
+    }
+    res.json()
+    .then(function(data) {
+      //alert(JSON.stringify(data))
+      localStorage.token = data.token
+      window.location = '/map'
+    })
+  }).catch(function(err) {
+    console.error(err)
+  })
+}
+
+function addFriend() {
+  var data = {
+    userId: 
+    friendId: 
+  }
+
+  fetch('/addFriend', {
+    headers: {
+      'Content-Type': 'application/json'
+    },
+    method: 'POST',
+    body: JSON.stringify(data)
+  }).then(function(res) {
+    console.log(res)
+    // if (!res.ok) { alert('Error') }
+    if (!res.ok) {
+      res.text().then(function(message) {
+        alert(message)
+      })
+    }
+    res.json()
+    .then(function(data) {
+      //alert(JSON.stringify(data))
+      localStorage.token = data.token
+      window.location = '/map'
+    })
+  }).catch(function(err) {
+    console.error(err)
+  })
+}
+
+function addInterests() {
+  var data = {
+    userId: 
+    interests: form.interests.value 
+  }
+
+  fetch('/addInterests', {
     headers: {
       'Content-Type': 'application/json'
     },
