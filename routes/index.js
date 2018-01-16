@@ -19,4 +19,11 @@ router.get('/map', (req, res, next) => {
 	return res.render('map')
 })
 
+router.post('/register', (req, res, next) => {
+	request.post({
+		url: config.apiUrl + '/users',
+		form: req.body
+	}).pipe(res)
+})
+
 module.exports = router;
