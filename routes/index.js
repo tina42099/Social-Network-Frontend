@@ -54,18 +54,24 @@ router.get('/addFriend', (req, res, next) => {
 
 router.post('/addFriend', (req, res, next) => {
 	request.post({
-		url: config.apiUrl + 'users/addFriend',
+		url: config.apiUrl + '/users/addFriend',
 		form: req.body
 	}).pipe(res)
 })
 
 router.post('/addInterests', (req, res, next) => {
 	request.post({
-		url: config.apiUrl + 'users/addInterests',
+		url: config.apiUrl + '/users/addInterests',
 		form: req.body
 	}).pipe(res)
 })
 
+router.get('/search/:value', (req, res, next) => {
+	request.get({ 
+		url: config.apiUrl + '/search/' + req.params.value,
+		headers: { 'x-access-token': req.headers['x-access-token']}
+	}).pipe(res)
+})
 
 
 

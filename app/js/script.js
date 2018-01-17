@@ -77,6 +77,7 @@ function addFriend() {
   fetch('/addFriend', {
     headers: {
       'Content-Type': 'application/json'
+      'x-access-token': localStorage.token,
     },
     method: 'POST',
     body: JSON.stringify(data)
@@ -106,24 +107,93 @@ function addInterests() {
   }
 
   fetch('/addInterests', {
+=======
+// function addFriend() {
+//   var data = {
+//     userId: ,
+//     friendId: 
+//   }
+
+//   fetch('/addFriend', {
+//     headers: {
+//       'Content-Type': 'application/json'
+//     },
+//     method: 'POST',
+//     body: JSON.stringify(data)
+//   }).then(function(res) {
+//     console.log(res)
+//     // if (!res.ok) { alert('Error') }
+//     if (!res.ok) {
+//       res.text().then(function(message) {
+//         alert(message)
+//       })
+//     }
+//     res.json()
+//     .then(function(data) {
+//       //alert(JSON.stringify(data))
+//       localStorage.token = data.token
+//       window.location = '/map'
+//     })
+//   }).catch(function(err) {
+//     console.error(err)
+//   })
+// }
+
+// function addInterests() {
+//   var data = {
+//     userId: ,
+//     interests: form.interests.value 
+//   }
+
+//   fetch('/addInterests', {
+//     headers: {
+//       'Content-Type': 'application/json'
+//     },
+//     method: 'POST',
+//     body: JSON.stringify(data)
+//   }).then(function(res) {
+//     console.log(res)
+//     // if (!res.ok) { alert('Error') }
+//     if (!res.ok) {
+//       res.text().then(function(message) {
+//         alert(message)
+//       })
+//     }
+//     res.json()
+//     .then(function(data) {
+//       //alert(JSON.stringify(data))
+//       localStorage.token = data.token
+//       window.location = '/map'
+//     })
+//   }).catch(function(err) {
+//     console.error(err)
+//   })
+// }
+
+function searchName() {
+  data = form.search.value
+  if (!data)
+    return false
+  fetch('/search/' + data, {
     headers: {
-      'Content-Type': 'application/json'
+      'Content-Type': 'application/json',
+      'x-access-token': localStorage.token,
     },
-    method: 'POST',
-    body: JSON.stringify(data)
-  }).then(function(res) {
-    console.log(res)
-    // if (!res.ok) { alert('Error') }
+    method: 'GET',
+    }).then(function(res) {
+    console.log(JSON.stringify(res))
     if (!res.ok) {
       res.text().then(function(message) {
+        console.log("err1")
         alert(message)
       })
     }
     res.json()
     .then(function(data) {
-      //alert(JSON.stringify(data))
-      localStorage.token = data.token
-      window.location = '/map'
+      console.log('SUCCESS')
+      console.log(JSON.stringify(data))
+      alert(JSON.stringify(data))
+      //localStorage.token = data.token
     })
   }).catch(function(err) {
     console.error(err)
@@ -193,4 +263,3 @@ function displayError(message) {
     errorDiv.innerHTML = message;
     errorDiv.style.visibility = 'visible';
 }
-//ca4596b1d98de1f80fb21237040afdc92908118a
