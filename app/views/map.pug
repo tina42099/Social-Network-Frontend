@@ -84,29 +84,15 @@ block content
     input#pac-input.controls(type='text', placeholder='Search Box')
     #map
     script.
+      var map, infoWindow, startMarker;
       function initAutocomplete() {
-      var map = new google.maps.Map(document.getElementById('map'), {
+      map = new google.maps.Map(document.getElementById('map'), {
       center: {lat: 37.0902, lng: -95.7129},
       zoom: 5,
       mapTypeId: 'roadmap'
       });
 
       infoWindow = new google.maps.InfoWindow;
-      
-      //- var icon = {
-      //- url: place.icon,
-      //- size: new google.maps.Size(71, 71),
-      //- origin: new google.maps.Point(0, 0),
-      //- anchor: new google.maps.Point(17, 34),
-      //- scaledSize: new google.maps.Size(25, 25)
-      //- };
-      //- // Create a marker for each place.
-      //- markers.push(new google.maps.Marker({
-      //- map: map,
-      //- icon: icon,
-      //- title: place.name,
-      //- position: place.geometry.location
-      //- }));
 
       // Try HTML5 geolocation.
       if (navigator.geolocation) {
@@ -116,10 +102,17 @@ block content
             lng: position.coords.longitude
           };
 
+          startMarker = new google.maps.Marker({
+          map: map,
+          position: pos,
+          title: 'You are Here'
+          });
+
           infoWindow.setPosition(pos);
-          infoWindow.setContent('You Are Here');
+          infoWindow.setContent('You are here');
           infoWindow.open(map);
           map.setCenter(pos);
+          map.setZoom(18)
         }, function() {
           handleLocationError(true, infoWindow, map.getCenter());
         });
@@ -131,7 +124,7 @@ block content
       // Create the search box and link it to the UI element.
       var input = document.getElementById('pac-input');
       var searchBox = new google.maps.places.SearchBox(input);
-      map.controls[google.maps.ControlPosition.TOP_LEFT].push(input);
+      map.controls[google.maps.ControlPosition.TOP_CENTER].push(input);
       // Bias the SearchBox results towards current map's viewport.
       map.addListener('bounds_changed', function() {
       searchBox.setBounds(map.getBounds());
