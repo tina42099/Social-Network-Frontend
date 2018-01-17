@@ -129,8 +129,7 @@ function addInterests() {
     console.error(err)
   })
 }
-<<<<<<< HEAD
-=======
+
 
 /*=============================================
 =            Form Submit Functions            =
@@ -195,4 +194,3 @@ function displayError(message) {
     errorDiv.innerHTML = message;
     errorDiv.style.visibility = 'visible';
 }
->>>>>>> ca4596b1d98de1f80fb21237040afdc92908118a
