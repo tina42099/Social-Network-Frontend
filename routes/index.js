@@ -33,6 +33,14 @@ router.get('/map', (req, res, next) => {
 	return res.render('map')
 })
 
+router.get('/city', (req, res, next) => {
+	return res.render('city')
+})
+
+router.get('/test', (req, res, next) => {
+	return res.render('test')
+})
+
 router.post('/register', (req, res, next) => {
 	request.post({
 		url: config.apiUrl + '/users',
@@ -40,19 +48,31 @@ router.post('/register', (req, res, next) => {
 	}).pipe(res)
 })
 
+router.get('/addFriend', (req, res, next) => {
+	return res.render('addFriend')
+})
+
 router.post('/addFriend', (req, res, next) => {
 	request.post({
-		url: config.apiUrl + 'users/addFriend',
+		url: config.apiUrl + '/users/addFriend',
 		form: req.body
 	}).pipe(res)
 })
 
 router.post('/addInterests', (req, res, next) => {
 	request.post({
-		url: config.apiUrl + 'users/addInterests',
+		url: config.apiUrl + '/users/addInterests',
 		form: req.body
 	}).pipe(res)
 })
+
+router.get('/search/:value', (req, res, next) => {
+	request.get({ 
+		url: config.apiUrl + '/search/' + req.params.value,
+		headers: { 'x-access-token': req.headers['x-access-token']}
+	}).pipe(res)
+})
+
 
 
 module.exports = router;
