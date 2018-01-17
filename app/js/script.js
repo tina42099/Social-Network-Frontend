@@ -68,70 +68,73 @@ function login() {
   })
 }
 
-// function addFriend() {
-//   var data = {
-//     userId: ,
-//     friendId: 
-//   }
+function addFriend() {
+  var data = {
+    //userId: "his"
+    // friendId: 
+  }
 
-//   fetch('/addFriend', {
-//     headers: {
-//       'Content-Type': 'application/json'
-//     },
-//     method: 'POST',
-//     body: JSON.stringify(data)
-//   }).then(function(res) {
-//     console.log(res)
-//     // if (!res.ok) { alert('Error') }
-//     if (!res.ok) {
-//       res.text().then(function(message) {
-//         alert(message)
-//       })
-//     }
-//     res.json()
-//     .then(function(data) {
-//       //alert(JSON.stringify(data))
-//       localStorage.token = data.token
-//       window.location = '/map'
-//     })
-//   }).catch(function(err) {
-//     console.error(err)
-//   })
-// }
+  fetch('/addFriend', {
+    headers: {
+      'Content-Type': 'application/json',
+      'x-access-token': localStorage.token,
+    },
+    method: 'POST',
+    //body: JSON.stringify(data)
+  }).then(function(res) {
+    console.log(res)
+    // if (!res.ok) { alert('Error') }
+    if (!res.ok) {
+      res.text().then(function(message) {
+        alert(message)
+      })
+    }
+    res.json()
+    .then(function(data) {
+      //alert(JSON.stringify(data))
+      localStorage.token = data.token
+      window.location = '/map'
+    })
+  }).catch(function(err) {
+    console.error(err)
+  })
+}
 
-// function addInterests() {
-//   var data = {
-//     userId: ,
-//     interests: form.interests.value 
-//   }
+function addInterests() {
+  var data = {
+    // userId: ,
+    interests: form.interests.value 
+  }
 
-//   fetch('/addInterests', {
-//     headers: {
-//       'Content-Type': 'application/json'
-//     },
-//     method: 'POST',
-//     body: JSON.stringify(data)
-//   }).then(function(res) {
-//     console.log(res)
-//     // if (!res.ok) { alert('Error') }
-//     if (!res.ok) {
-//       res.text().then(function(message) {
-//         alert(message)
-//       })
-//     }
-//     res.json()
-//     .then(function(data) {
-//       //alert(JSON.stringify(data))
-//       localStorage.token = data.token
-//       window.location = '/map'
-//     })
-//   }).catch(function(err) {
-//     console.error(err)
-//   })
-// }
+  fetch('/addInterests', {
+    headers: {
+      'Content-Type': 'application/json',
+      'x-access-token': localStorage.token,
+    },
+    method: 'POST',
+    //body: JSON.stringify(data)
+  }).then(function(res) {
+    console.log(res)
+    // if (!res.ok) { alert('Error') }
+    if (!res.ok) {
+      res.text().then(function(message) {
+        alert(message)
+      })
+    }
+    res.json()
+    .then(function(data) {
+      //alert(JSON.stringify(data))
+      localStorage.token = data.token
+      window.location = '/map'
+    })
+  }).catch(function(err) {
+    console.error(err)
+  })
+}
 
 function searchName() {
   data = form.search.value
+  document.getElementById("dropdown").classList.toggle("show");
   if (!data)
     return false
   fetch('/search/' + data, {
