@@ -69,8 +69,10 @@ function login() {
 }
 
 function addFriend() {
+  var decodedToken = JSON.parse(atob(localStorage.token.split('.')[1]))
+
   var data = {
-    //userId: "his"
+    userId: decodedToken._id
     // friendId: 
   }
 
@@ -101,9 +103,20 @@ function addFriend() {
 }
 
 function addInterests() {
+  var values = [];
+  var cbs = document.forms['interests'].elements['interest'];
+  for(var i=0,cbLen=cbs.length;i<cbLen;i++){
+    if(cbs[i].checked){
+      values.push(cbs[i].value);
+    } 
+  }
+
+  var decodedToken = JSON.parse(atob(localStorage.token.split('.')[1]))
+
+
   var data = {
-    // userId: ,
-    interests: form.interests.value 
+    userId: decodedToken.id,
+    interests: values
   }
 
   fetch('/addInterests', {
@@ -112,10 +125,8 @@ function addInterests() {
       'x-access-token': localStorage.token,
     },
     method: 'POST',
-    //body: JSON.stringify(data)
+    body: JSON.stringify(data)
   }).then(function(res) {
-    console.log(res)
-    // if (!res.ok) { alert('Error') }
     if (!res.ok) {
       res.text().then(function(message) {
         alert(message)
@@ -123,9 +134,7 @@ function addInterests() {
     }
     res.json()
     .then(function(data) {
-      //alert(JSON.stringify(data))
-      localStorage.token = data.token
-      window.location = '/map'
+      alert(JSON.stringify(data))
     })
   }).catch(function(err) {
     console.error(err)

@@ -1,0 +1,11 @@
+extends template
+
+block content
+
+    form(name="interests")
+        .form-box Choose your interests
+            p Coding
+            input(type='checkbox', id='coding' name='interest' value='coding')
+            p Math
+            input(type='checkbox', id='math' name='interest' value='math')
+            button#submit(type='button' onclick='addInterests()') Submit
