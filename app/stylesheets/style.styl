@@ -31,14 +31,21 @@ body
 
 // FORM
 .form-box
-	width 50%
-	margin 0px 25%
-	//box-shadow 0px 0px 20px #CCC
+	width 40%
+	margin 0px 30%
+	box-shadow 0px 0px 20px #CCC
 	padding 30px
 .fb-item
 	width 100%
 	margin-bottom 20px
 	font-size 1.2em
+	display flex
+	justify-content space-between
+.fb-item input
+	display flex
+	justify-content space-between
+	font-size 1.2em
+	width 50%
 .fb-item:focus //huh
 	border-color blue
 	
@@ -72,6 +79,9 @@ img.center
 	margin auto
 	height 40%
 	width 40%
+	
+.center
+	text-align: center
 
 #usercard
 	box-shadow: 0 4px 12px 0 rgba(24, 169, 167, 1)

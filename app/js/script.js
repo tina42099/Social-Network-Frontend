@@ -44,7 +44,7 @@ function login() {
 
   fetch('/login', {
     headers: {
-      'Content-Type': 'application/json'
+      'Content-Type': 'application/json',
       'x-access-token': localStorage.token
     },
     method: 'POST',
@@ -70,8 +70,8 @@ function login() {
 
 function addFriend() {
   var data = {
-    userId: 
-    friendId: 
+    userId: String,
+    friendId: String
   }
 
   fetch('/addFriend', {
@@ -101,7 +101,7 @@ function addFriend() {
 
 function addInterests() {
   var data = {
-    userId: 
+    userId: String,
     interests: form.interests.value 
   }
 
@@ -129,8 +129,6 @@ function addInterests() {
     console.error(err)
   })
 }
-<<<<<<< HEAD
-=======
 
 /*=============================================
 =            Form Submit Functions            =
@@ -195,4 +193,4 @@ function displayError(message) {
     errorDiv.innerHTML = message;
     errorDiv.style.visibility = 'visible';
 }
->>>>>>> ca4596b1d98de1f80fb21237040afdc92908118a
+//ca4596b1d98de1f80fb21237040afdc92908118a
