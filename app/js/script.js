@@ -162,6 +162,10 @@ function searchName() {
     console.error(err)
   })
 }
+<<<<<<< HEAD
+
+=======
+>>>>>>> b0ddb40e7566fc61663e746a742258814f1eba94
 
 /*=============================================
 =            Form Submit Functions            =
