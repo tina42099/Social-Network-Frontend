@@ -55,14 +55,16 @@ router.get('/addFriend', (req, res, next) => {
 router.post('/addFriend', (req, res, next) => {
 	request.post({
 		url: config.apiUrl + '/users/addFriend',
-		form: req.body
+		headers: { 'x-access-token': req.headers['x-access-token']}
+		//form: req.body
 	}).pipe(res)
 })
 
 router.post('/addInterests', (req, res, next) => {
 	request.post({
 		url: config.apiUrl + '/users/addInterests',
-		form: req.body
+		headers: { 'x-access-token': req.headers['x-access-token']}
+		//form: req.body
 	}).pipe(res)
 })
 
