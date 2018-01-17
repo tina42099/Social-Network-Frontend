@@ -134,7 +134,6 @@ function addInterests() {
 
 function searchName() {
   data = form.search.value
-  document.getElementById("dropdown").classList.toggle("show");
   if (!data)
     return false
   fetch('/search/' + data, {
