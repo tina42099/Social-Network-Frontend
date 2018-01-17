@@ -65,7 +65,6 @@ router.get('/interests', (req, res, next) => {
 })
 
 router.post('/addInterests', (req, res, next) => {
-	console.log(req.body)
 	request.post({
 		url: config.apiUrl + '/users/addInterests',
 		headers: { 'x-access-token': req.headers['x-access-token']},

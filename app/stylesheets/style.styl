@@ -4,112 +4,135 @@ text-color = #000
 mobile-width = 600px
 
 body
-	margin 0
-	padding 0
-	font-family sans-serif
+    margin 0
+    padding 0
+    font-family sans-serif
 
 #navbar
-	position relative // as opposed to relative, fixed, etc
-	margin-bottom 40px
-	top 0
-	left 0
-	width calc(100% - 40px)
-	padding 20px
-	background linear-gradient(to right, rgba(201, 247, 246, 1), rgba(63, 222, 156, 1))
+    position relative // as opposed to relative, fixed, etc
+    margin-bottom 40px
+    top 0
+    left 0
+    width calc(100% - 40px)
+    padding 20px
+    background linear-gradient(to right, rgba(201, 247, 246, 1), rgba(63, 222, 156, 1))
 
 #navbar span
-	color black
-	font-size 1em
-	text-transform uppercase
-	font-family 'Futura', sans-serif // goes until it finds a font on the computer
+    color black
+    font-size 1em
+    text-transform uppercase
+    font-family 'Futura', sans-serif // goes until it finds a font on the computer
 
 #nb-items
-	float right
+    float right
 #nb-items *
-	padding-left 20px
+    padding-left 20px
 
 
 // FORM
 .form-box
-	width 40%
-	margin 0px 30%
-	box-shadow 0px 0px 20px #CCC
-	padding 30px
+    width 40%
+    margin 0px 30%
+    box-shadow 0px 0px 20px #CCC
+    padding 30px
 .fb-item
-	width 100%
-	margin-bottom 20px
-	font-size 1.2em
-	display flex
-	justify-content space-between
+    width 100%
+    margin-bottom 20px
+    font-size 1.2em
+    display flex
+    justify-content space-between
 .fb-item input
-	display flex
-	justify-content space-between
-	font-size 1.2em
-	width 50%
+    display flex
+    justify-content space-between
+    font-size 1.2em
+    width 50%
 .fb-item:focus //huh
-	border-color blue
-	
+    border-color blue
+    
 #submit
-	bottom 0
-	left 0
-	width 100%
-	background rgba(25, 219, 151, 1)
-	padding 20px
-	text-align center
-	color white
-	font-size 1.4em
-	//text-transform uppercase
-	-webkit-transition-duration 0.2s // Safari
-	transition-duration 0.2s
-	
+    bottom 0
+    left 0
+    width 100%
+    background rgba(25, 219, 151, 1)
+    padding 20px
+    text-align center
+    color white
+    font-size 1.4em
+    //text-transform uppercase
+    -webkit-transition-duration 0.2s // Safari
+    transition-duration 0.2s
+    
 #submit:hover
-	opacity 0.6
-	//font-size 1.2em
-	//text-transform uppercase
-	cursor pointer
-	
+    opacity 0.6
+    //font-size 1.2em
+    //text-transform uppercase
+    cursor pointer
+    
 // MAP
 
 #map
-	height: 400px
-	width: 100%
+    height: 400px
+    width: 100%
 
 img.center
-	display block
-	margin auto
-	height 40%
-	width 40%
-	
+    display block
+    margin auto
+    height 40%
+    width 40%
+    
 .center
-	text-align: center
+    text-align: center
 
 #usercard
-	box-shadow: 0 4px 12px 0 rgba(24, 169, 167, 1)
-	background linear-gradient(to right, rgba(63, 222, 156, 1), rgba(201, 247, 246, 1))
-	max-width: 500px;
-	margin: auto;
-	text-align: center;
-	
+    box-shadow: 0 4px 12px 0 rgba(24, 169, 167, 1)
+    background linear-gradient(to right, rgba(63, 222, 156, 1), rgba(201, 247, 246, 1))
+    max-width: 500px;
+    margin: auto;
+    text-align: center;
+    
 #mapcard
-	box-shadow: 0 4px 12px 0 rgba(24, 169, 167, 1)
-	background linear-gradient(to right, rgba(63, 222, 156, 1), rgba(201, 247, 246, 1))
-	max-width: 1200px;
-	margin: auto;
-	text-align: center;
+    box-shadow: 0 4px 12px 0 rgba(24, 169, 167, 1)
+    background linear-gradient(to right, rgba(63, 222, 156, 1), rgba(201, 247, 246, 1))
+    max-width: 1200px;
+    margin: auto;
+    text-align: center;
 
 #map
-	margin-top -40px
-	width 100%
-	height 850px
-	
+    margin-top -40px
+    width 100%
+    height 850px
+    
 #map.smaller
-	margin-top -40px
-	width 80%
-	max-height 500px
-	display block
-	margin auto
+    margin-top -40px
+    width 80%
+    max-height 500px
+    display block
+    margin auto
 
 #search
-	width 100%
-	height 30px
-	font-size 1.2em
+    width 100%
+    height 30px
+    font-size 1.2em
+
+
+#names {
+    /* Remove default list styling */
+    list-style-type: none;
+    padding: 0;
+    margin: 0;
+}
+
+#names li a {
+    border: 1px solid #ddd; /* Add a border to all links */
+    margin-top: -1px; /* Prevent double borders */
+    background-color: #f6f6f6; /* Grey background color */
+    padding: 12px; /* Add some padding */
+    text-decoration: none; /* Remove default text underline */
+    font-size: 18px; /* Increase the font-size */
+    color: black; /* Add a black text color */
+    display: block; /* Make it into a block element to fill the whole list */
+}
+
+#names li a:hover:not(.header) {
+    background-color: #eee; /* Add a hover effect to all links, except for headers */
+}

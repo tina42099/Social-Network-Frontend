@@ -51,7 +51,6 @@ function login() {
     body: JSON.stringify(data)
   }).then(function(res) {
     console.log(res)
-    // if (!res.ok) { alert('Error') }
     if (!res.ok) {
       res.text().then(function(message) {
         alert(message)
@@ -59,8 +58,6 @@ function login() {
     }
     res.json()
     .then(function(data) {
-      //alert(JSON.stringify(data))
-      localStorage.token = data.token
       window.location = '/map'
     })
   }).catch(function(err) {
@@ -68,42 +65,7 @@ function login() {
   })
 }
 
-function addFriend() {
-  var data = {
-    userId: String,
-    friendId: String
-  }
 
-  fetch('/addFriend', {
-    headers: {
-      'Content-Type': 'application/json'
-      'x-access-token': localStorage.token,
-    },
-    method: 'POST',
-    body: JSON.stringify(data)
-  }).then(function(res) {
-    console.log(res)
-    // if (!res.ok) { alert('Error') }
-    if (!res.ok) {
-      res.text().then(function(message) {
-        alert(message)
-      })
-    }
-    res.json()
-    .then(function(data) {
-      //alert(JSON.stringify(data))
-      localStorage.token = data.token
-      window.location = '/map'
-    })
-  }).catch(function(err) {
-    console.error(err)
-  })
-}
-
-function addInterests() {
-  var data = {
-    userId: String,
-=======
 function addFriend() {
   var decodedToken = JSON.parse(atob(localStorage.token.split('.')[1]))
 
@@ -121,7 +83,6 @@ function addFriend() {
     //body: JSON.stringify(data)
   }).then(function(res) {
     console.log(res)
-    // if (!res.ok) { alert('Error') }
     if (!res.ok) {
       res.text().then(function(message) {
         alert(message)
@@ -129,8 +90,6 @@ function addFriend() {
     }
     res.json()
     .then(function(data) {
-      //alert(JSON.stringify(data))
-      localStorage.token = data.token
       window.location = '/map'
     })
   }).catch(function(err) {
@@ -156,67 +115,6 @@ function addInterests() {
   }
 
   fetch('/addInterests', {
-// function addFriend() {
-//   var data = {
-//     userId: ,
-//     friendId: 
-//   }
-
-//   fetch('/addFriend', {
-//     headers: {
-//       'Content-Type': 'application/json'
-//     },
-//     method: 'POST',
-//     body: JSON.stringify(data)
-//   }).then(function(res) {
-//     console.log(res)
-//     // if (!res.ok) { alert('Error') }
-//     if (!res.ok) {
-//       res.text().then(function(message) {
-//         alert(message)
-//       })
-//     }
-//     res.json()
-//     .then(function(data) {
-//       //alert(JSON.stringify(data))
-//       localStorage.token = data.token
-//       window.location = '/map'
-//     })
-//   }).catch(function(err) {
-//     console.error(err)
-//   })
-// }
-
-// function addInterests() {
-//   var data = {
-//     userId: ,
-//     interests: form.interests.value 
-//   }
-
-//   fetch('/addInterests', {
-//     headers: {
-//       'Content-Type': 'application/json'
-//     },
-//     method: 'POST',
-//     body: JSON.stringify(data)
-//   }).then(function(res) {
-//     console.log(res)
-//     // if (!res.ok) { alert('Error') }
-//     if (!res.ok) {
-//       res.text().then(function(message) {
-//         alert(message)
-//       })
-//     }
-//     res.json()
-//     .then(function(data) {
-//       //alert(JSON.stringify(data))
-//       localStorage.token = data.token
-//       window.location = '/map'
-//     })
-//   }).catch(function(err) {
-//     console.error(err)
-//   })
-// }
     headers: {
       'Content-Type': 'application/json',
       'x-access-token': localStorage.token,
@@ -249,7 +147,6 @@ function searchName() {
     },
     method: 'GET',
     }).then(function(res) {
-    console.log(JSON.stringify(res))
     if (!res.ok) {
       res.text().then(function(message) {
         console.log("err1")
@@ -258,14 +155,20 @@ function searchName() {
     }
     res.json()
     .then(function(data) {
-      console.log('SUCCESS')
-      console.log(JSON.stringify(data))
-      alert(JSON.stringify(data))
-      //localStorage.token = data.token
+      for (var i = 0; i < data.length; i++) {
+        appendList(data[i].name)
+      }
     })
   }).catch(function(err) {
     console.error(err)
   })
+}
+
+function appendList(name) {
+  var node = document.createElement("LI");
+  var textnode = document.createTextNode(name); 
+  node.appendChild(textnode); 
+  document.getElementById("names").appendChild(node); 
 }
 
 /*=============================================
