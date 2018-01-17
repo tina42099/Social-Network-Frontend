@@ -1,5 +1,7 @@
 extends template
 
 block content
-
-    input(type='text' name='search' placeholder='Search...')
+    form
+        .form-box
+            input#search(type="text" placeholder="Search.." onkeyup="searchName()")
+            //button#submit(type='button') Search
