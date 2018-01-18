@@ -31,6 +31,7 @@ router.post('/login', (req, res, next) => {
 
 router.get('/profile', (req, res, next) => {
 	return res.render('profile')
+})
 
 
 router.get('/profile/:id', (req, res, next) => {

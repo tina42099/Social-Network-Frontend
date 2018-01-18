@@ -27,6 +27,7 @@ function register() {
     res.json()
     .then(function(user) {
       //alert(JSON.stringify(user))
+      login()
       window.location = '/map'
     })
   }).catch(function(err) {
@@ -61,7 +62,6 @@ function login() {
   }).catch(function(err) {
     console.error(err)
   })
-
 } 
 
 
@@ -127,7 +127,6 @@ function addFriend() {
 }
 
 function addInterests() {
-
   var data = {
     interests: form.interests.value 
   }
