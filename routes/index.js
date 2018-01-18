@@ -3,9 +3,13 @@ const router = express.Router();
 const request = require('request');
 const config = require('../app/models/config');
 
-router.get('/', (req, res, next) => {
+router.get('/register', (req, res, next) => {
     return res.render('register');
-});
+})
+
+router.get('/', (req, res, next) => {
+	return res.render('map')
+})
 
 router.post('/register', (req, res, next) => {
   request.post({
@@ -31,6 +35,13 @@ router.get('/profile', (req, res, next) => {
 
 router.get('/map', (req, res, next) => {
   return res.render('map')
+})
+
+router.post('/map', (req, res, next) => {
+	request.post({
+		url: config.apiUrl + '/users/checkIn',
+		form: req.body
+	}).pipe(res)
 })
 
 router.get('/city', (req, res, next) => {
