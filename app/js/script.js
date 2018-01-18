@@ -32,20 +32,21 @@ function register() {
   }).catch(function(err) {
     console.error(err)
   })
-  // console.log(data.name)
-  // console.log(data.email)
-  // console.log(data.address)
-  // console.log(data.age)
-  // console.log(data.gender)
+  
+  // localStorage.setItem('name', user.name)
+  // localStorage.setItem('email', user.email)
+  // localStorage.setItem('age', user.age)
+  // localStorage.setItem('gender', user.gender)
+  // localStorage.setItem('address', user.address)
 
-  res.render('profile', {
-    name: data.name,
-    email: data.email,
-    address: data.address,
-    age: data.age,
-    gender: data.gender
-  })
-}
+//   res.render('profile', {
+//     name: user.name,
+//     email: user.email,
+//     address: user.address,
+//     age: user.age,
+//     gender: user.gender
+//   })
+// }
 
 function login() {
   var data = {
@@ -71,13 +72,13 @@ function login() {
     .then(function(data) {
 
       localStorage.token = data.token
-      res.render('profile', {
-        name: data.name,
-        email: data.email,
-        address: data.address,
-        age: data.age,
-        gender: data.gender
-      })
+      // res.render('profile', {
+      //   name: data.name,
+      //   email: data.email,
+      //   address: data.address,
+      //   age: data.age,
+      //   gender: data.gender
+      // })
       window.location = '/map'
     })
   }).catch(function(err) {

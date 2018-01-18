@@ -9,6 +9,33 @@ block content
 		h1 #{address}
 		h1 #{age}
 		h1 #{gender}
-		//- script.
-		//- 	console.log(data)
+		script.
+			fetch('/profile', {
+			headers: {
+			'Content-Type': 'application/json',
+			'x-access-token': localStorage.token
+			},
+			method: 'GET',
+			body: JSON.stringify(data)
+			}).then(function(res) {
+			console.log(res)
+			if (!res.ok) {
+				res.text().then(function(message) {
+				alert(message)
+				})
+				}
+			res.json().then(function(data) {
+			localStorage.token = data.token
+			res.render('profile', {
+			name: data.name,
+			email: data.email,
+			address: data.address,
+			age: data.age,
+			gender: data.gender
+			})
+			window.location = '/map'
+			})
+			}).catch(function(err) {
+			    console.error(err)
+			  })
 		br
