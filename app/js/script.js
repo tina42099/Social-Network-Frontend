@@ -58,6 +58,7 @@ function login() {
     }
     res.json()
     .then(function(data) {
+      localStorage.token = data.token
       window.location = '/map'
     })
   }).catch(function(err) {
