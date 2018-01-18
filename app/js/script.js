@@ -91,21 +91,26 @@ function checkIn(pos) {
   })
 }
 
-function addFriend() {
+function addFriend() {  
+  console.log("localStorage" + JSON.stringify(localStorage))
   var decodedToken = JSON.parse(atob(localStorage.token.split('.')[1]))
 
   var data = {
-    userId: decodedToken._id
-    // friendId: 
+    userId: decodedToken.id
   }
 
-  fetch('/addFriend', {
+  var url = window.location.href
+  var url_parts = url.replace(/\/\s*$/,'').split('/'); 
+  url_parts.shift(); 
+  console.log(url_parts)
+
+  fetch('/users/' + url_parts[3] + '/id', {
     headers: {
       'Content-Type': 'application/json',
       'x-access-token': localStorage.token,
     },
     method: 'POST',
-    //body: JSON.stringify(data)
+    body: JSON.stringify(data)
   }).then(function(res) {
     console.log(res)
     if (!res.ok) {

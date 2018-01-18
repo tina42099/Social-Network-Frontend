@@ -71,9 +71,9 @@ router.get('/addFriend', (req, res, next) => {
   return res.render('addFriend')
 })
 
-router.post('/addFriend', (req, res, next) => {
+router.post('/users/:userId/id', (req, res, next) => {
   request.post({
-    url: config.apiUrl + '/users/addFriend',
+    url: config.apiUrl + '/users/' + req.params.userId + '/addFriend',
     headers: { 'x-access-token': req.headers['x-access-token'] },
     form: req.body
   }).pipe(res)
