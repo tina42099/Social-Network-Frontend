@@ -62,7 +62,6 @@ function login() {
     body: JSON.stringify(data)
   }).then(function(res) {
     console.log(res)
-    // if (!res.ok) { alert('Error') }
     if (!res.ok) {
       res.text().then(function(message) {
         alert(message)
@@ -70,6 +69,7 @@ function login() {
     }
     res.json()
     .then(function(data) {
+
       localStorage.token = data.token
       res.render('profile', {
         name: data.name,
@@ -92,45 +92,13 @@ function login() {
   // })
 } 
 
-function addFriend() {
-  var data = {
-    userId: String,
-    friendId: String
-  }
 
-  fetch('/addFriend', {
-    headers: {
-      'Content-Type': 'application/json'
-      'x-access-token': localStorage.token,
-    },
-    method: 'POST',
-    body: JSON.stringify(data)
-  }).then(function(res) {
-    console.log(res)
-    // if (!res.ok) { alert('Error') }
-    if (!res.ok) {
-      res.text().then(function(message) {
-        alert(message)
-      })
-    }
-    res.json()
-    .then(function(data) {
-      //alert(JSON.stringify(data))
-      localStorage.token = data.token
-      window.location = '/map'
-    })
-  }).catch(function(err) {
-    console.error(err)
-  })
-}
-
-function addInterests() {
-  var data = {
-    userId: String,
 
 function addFriend() {
+  var decodedToken = JSON.parse(atob(localStorage.token.split('.')[1]))
+
   var data = {
-    //userId: "his"
+    userId: decodedToken._id
     // friendId: 
   }
 
@@ -143,7 +111,6 @@ function addFriend() {
     //body: JSON.stringify(data)
   }).then(function(res) {
     console.log(res)
-    // if (!res.ok) { alert('Error') }
     if (!res.ok) {
       res.text().then(function(message) {
         alert(message)
@@ -151,8 +118,6 @@ function addFriend() {
     }
     res.json()
     .then(function(data) {
-      //alert(JSON.stringify(data))
-      localStorage.token = data.token
       window.location = '/map'
     })
   }).catch(function(err) {
@@ -161,9 +126,27 @@ function addFriend() {
 }
 
 function addInterests() {
+
   var data = {
     interests: form.interests.value 
   }
+
+  var values = [];
+  var cbs = document.forms['interests'].elements['interest'];
+  for(var i=0,cbLen=cbs.length;i<cbLen;i++){
+    if(cbs[i].checked){
+      values.push(cbs[i].value);
+    } 
+  }
+
+  var decodedToken = JSON.parse(atob(localStorage.token.split('.')[1]))
+
+
+  var data = {
+    userId: decodedToken.id,
+    interests: values
+  }
+
 
   fetch('/addInterests', {
     headers: {
@@ -171,10 +154,8 @@ function addInterests() {
       'x-access-token': localStorage.token,
     },
     method: 'POST',
-    //body: JSON.stringify(data)
+    body: JSON.stringify(data)
   }).then(function(res) {
-    console.log(res)
-    // if (!res.ok) { alert('Error') }
     if (!res.ok) {
       res.text().then(function(message) {
         alert(message)
@@ -182,9 +163,7 @@ function addInterests() {
     }
     res.json()
     .then(function(data) {
-      //alert(JSON.stringify(data))
-      localStorage.token = data.token
-      window.location = '/map'
+      alert(JSON.stringify(data))
     })
   }).catch(function(err) {
     console.error(err)
@@ -202,7 +181,6 @@ function searchName() {
     },
     method: 'GET',
     }).then(function(res) {
-    console.log(JSON.stringify(res))
     if (!res.ok) {
       res.text().then(function(message) {
         console.log("err1")
@@ -211,14 +189,25 @@ function searchName() {
     }
     res.json()
     .then(function(data) {
-      console.log('SUCCESS')
-      console.log(JSON.stringify(data))
-      alert(JSON.stringify(data))
-      //localStorage.token = data.token
+      document.getElementById('names').innerHTML = ''
+      for (var i = 0; i < data.length; i++) {
+        appendList(data[i].name, data[i]._id)
+      }
     })
   }).catch(function(err) {
     console.error(err)
   })
+}
+
+function appendList(name, id) {
+  var li = document.createElement("LI");
+  var url = "/users/" + id + "/id"
+  var textnode = document.createTextNode(name); 
+  var a = document.createElement('a');
+  a.appendChild(textnode)
+  a.href = url
+  document.getElementById("names").appendChild(li)
+  document.getElementById("names").appendChild(a)
 }
 
 /*=============================================
