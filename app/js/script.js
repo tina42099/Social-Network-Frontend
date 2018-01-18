@@ -33,6 +33,7 @@ function register() {
   }).catch(function(err) {
     console.error(err)
   })
+}
 
 function login() {
   var data = {
@@ -66,6 +67,7 @@ function login() {
 
 
 function checkIn(pos) {
+  pos.id = localStorage.id
   fetch('/map', {
     headers: {
       'Content-Type': 'application/json',
@@ -163,7 +165,7 @@ function addInterests() {
     }
     res.json()
     .then(function(data) {
-      alert(JSON.stringify(data))
+      window.location = '/map'
     })
   }).catch(function(err) {
     console.error(err)
