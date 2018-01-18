@@ -155,8 +155,9 @@ function searchName() {
     }
     res.json()
     .then(function(data) {
+      document.getElementById('names').innerHTML = ''
       for (var i = 0; i < data.length; i++) {
-        appendList(data[i].name)
+        appendList(data[i].name, data[i]._id)
       }
     })
   }).catch(function(err) {
@@ -164,11 +165,15 @@ function searchName() {
   })
 }
 
-function appendList(name) {
-  var node = document.createElement("LI");
+function appendList(name, id) {
+  var li = document.createElement("LI");
+  var url = "/users/" + id + "/id"
   var textnode = document.createTextNode(name); 
-  node.appendChild(textnode); 
-  document.getElementById("names").appendChild(node); 
+  var a = document.createElement('a');
+  a.appendChild(textnode)
+  a.href = url
+  document.getElementById("names").appendChild(li)
+  document.getElementById("names").appendChild(a)
 }
 
 /*=============================================
