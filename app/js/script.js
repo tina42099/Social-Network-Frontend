@@ -65,6 +65,30 @@ function login() {
   })
 }
 
+function checkIn(pos) {
+  fetch('/map', {
+    headers: {
+      'Content-Type': 'application/json',
+      // 'x-access-token': localStorage.token
+    },
+    method: 'POST',
+    body: JSON.stringify(pos)
+  }).then(function(res) {
+    if (!res.ok) {
+      res.text()
+      .then(function(message) {
+        alert(message)
+      })
+    }
+    res.json()
+    .then(function(user) {
+      login()
+      window.location = '/map'
+    })
+  }).catch(function(err) {
+    console.log(err)
+  })
+}
 
 function addFriend() {
   var decodedToken = JSON.parse(atob(localStorage.token.split('.')[1]))
