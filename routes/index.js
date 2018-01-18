@@ -26,7 +26,33 @@ router.post('/login', (req, res, next) => {
 })
 
 router.get('/profile', (req, res, next) => {
-	return res.render('profile')
+	return res.render('profile', {
+        name: req.body.name,
+        email: req.body.email,
+        address: req.body.address,
+        age: req.body.age,
+        gender: req.body.gender
+     })
+})
+
+// router.get('/profile', (req, res, next) => {
+// 	request.get({ 
+// 		url: config.apiUrl + '/users'
+// 	}).pipe(res)
+// })
+
+router.get('/profile/:id', (req, res, next) => {
+	request.get({ 
+		url: config.apiUrl + '/profile/' + req.params.value,
+		headers: { 'x-access-token': req.headers['x-access-token']}
+	}).pipe(res)
+	// res.render('profile', {
+	//     name: data.name,
+	//     email: data.email,
+	//     address: data.address,
+	//     age: data.age,
+	//     gender: data.gender
+	//   })
 })
 
 router.get('/map', (req, res, next) => {
@@ -74,7 +100,5 @@ router.get('/search/:value', (req, res, next) => {
 		headers: { 'x-access-token': req.headers['x-access-token']}
 	}).pipe(res)
 })
-
-
 
 module.exports = router;

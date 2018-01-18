@@ -11,8 +11,6 @@ function register() {
   if (form.password.value) data.password = form.password.value
   if (form.confirm.value) data.confirm = form.confirm.value
 
-  console.log(data)
-
   fetch('/register', {
     headers: {
       'Content-Type': 'application/json'
@@ -33,6 +31,19 @@ function register() {
     })
   }).catch(function(err) {
     console.error(err)
+  })
+  // console.log(data.name)
+  // console.log(data.email)
+  // console.log(data.address)
+  // console.log(data.age)
+  // console.log(data.gender)
+
+  res.render('profile', {
+    name: data.name,
+    email: data.email,
+    address: data.address,
+    age: data.age,
+    gender: data.gender
   })
 }
 
@@ -59,14 +70,27 @@ function login() {
     }
     res.json()
     .then(function(data) {
-      //alert(JSON.stringify(data))
       localStorage.token = data.token
+      res.render('profile', {
+        name: data.name,
+        email: data.email,
+        address: data.address,
+        age: data.age,
+        gender: data.gender
+      })
       window.location = '/map'
     })
   }).catch(function(err) {
     console.error(err)
   })
-}
+  // res.render('profile', {
+  //   name: data.name,
+  //   email: data.email,
+  //   address: data.address,
+  //   age: data.age,
+  //   gender: data.gender
+  // })
+} 
 
 function addFriend() {
   var data = {
@@ -103,7 +127,7 @@ function addFriend() {
 function addInterests() {
   var data = {
     userId: String,
-=======
+
 function addFriend() {
   var data = {
     //userId: "his"
@@ -138,72 +162,10 @@ function addFriend() {
 
 function addInterests() {
   var data = {
-    // userId: ,
     interests: form.interests.value 
   }
 
   fetch('/addInterests', {
-// function addFriend() {
-//   var data = {
-//     userId: ,
-//     friendId: 
-//   }
-
-//   fetch('/addFriend', {
-//     headers: {
-//       'Content-Type': 'application/json'
-//     },
-//     method: 'POST',
-//     body: JSON.stringify(data)
-//   }).then(function(res) {
-//     console.log(res)
-//     // if (!res.ok) { alert('Error') }
-//     if (!res.ok) {
-//       res.text().then(function(message) {
-//         alert(message)
-//       })
-//     }
-//     res.json()
-//     .then(function(data) {
-//       //alert(JSON.stringify(data))
-//       localStorage.token = data.token
-//       window.location = '/map'
-//     })
-//   }).catch(function(err) {
-//     console.error(err)
-//   })
-// }
-
-// function addInterests() {
-//   var data = {
-//     userId: ,
-//     interests: form.interests.value 
-//   }
-
-//   fetch('/addInterests', {
-//     headers: {
-//       'Content-Type': 'application/json'
-//     },
-//     method: 'POST',
-//     body: JSON.stringify(data)
-//   }).then(function(res) {
-//     console.log(res)
-//     // if (!res.ok) { alert('Error') }
-//     if (!res.ok) {
-//       res.text().then(function(message) {
-//         alert(message)
-//       })
-//     }
-//     res.json()
-//     .then(function(data) {
-//       //alert(JSON.stringify(data))
-//       localStorage.token = data.token
-//       window.location = '/map'
-//     })
-//   }).catch(function(err) {
-//     console.error(err)
-//   })
-// }
     headers: {
       'Content-Type': 'application/json',
       'x-access-token': localStorage.token,
