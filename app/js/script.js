@@ -11,8 +11,6 @@ function register() {
   if (form.password.value) data.password = form.password.value
   if (form.confirm.value) data.confirm = form.confirm.value
 
-  console.log(data)
-
   fetch('/register', {
     headers: {
       'Content-Type': 'application/json'
@@ -34,7 +32,6 @@ function register() {
   }).catch(function(err) {
     console.error(err)
   })
-}
 
 function login() {
   var data = {
@@ -64,7 +61,9 @@ function login() {
   }).catch(function(err) {
     console.error(err)
   })
-}
+
+} 
+
 
 function checkIn(pos) {
   fetch('/map', {
@@ -128,6 +127,11 @@ function addFriend() {
 }
 
 function addInterests() {
+
+  var data = {
+    interests: form.interests.value 
+  }
+
   var values = [];
   var cbs = document.forms['interests'].elements['interest'];
   for(var i=0,cbLen=cbs.length;i<cbLen;i++){
@@ -143,6 +147,7 @@ function addInterests() {
     userId: decodedToken.id,
     interests: values
   }
+
 
   fetch('/addInterests', {
     headers: {

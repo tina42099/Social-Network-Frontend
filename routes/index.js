@@ -30,7 +30,15 @@ router.post('/login', (req, res, next) => {
 })
 
 router.get('/profile', (req, res, next) => {
-  return res.render('profile')
+	return res.render('profile')
+
+
+router.get('/profile/:id', (req, res, next) => {
+	request.get({ 
+		url: config.apiUrl + '/profile/' + req.params.value,
+		headers: { 'x-access-token': req.headers['x-access-token']}
+	}).pipe(res)
+  	return res.render('profile')
 })
 
 router.get('/map', (req, res, next) => {
