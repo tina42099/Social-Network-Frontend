@@ -32,21 +32,6 @@ function register() {
   }).catch(function(err) {
     console.error(err)
   })
-  
-  // localStorage.setItem('name', user.name)
-  // localStorage.setItem('email', user.email)
-  // localStorage.setItem('age', user.age)
-  // localStorage.setItem('gender', user.gender)
-  // localStorage.setItem('address', user.address)
-
-//   res.render('profile', {
-//     name: user.name,
-//     email: user.email,
-//     address: user.address,
-//     age: user.age,
-//     gender: user.gender
-//   })
-// }
 
 function login() {
   var data = {
@@ -72,28 +57,39 @@ function login() {
     .then(function(data) {
 
       localStorage.token = data.token
-      // res.render('profile', {
-      //   name: data.name,
-      //   email: data.email,
-      //   address: data.address,
-      //   age: data.age,
-      //   gender: data.gender
-      // })
       window.location = '/map'
     })
   }).catch(function(err) {
     console.error(err)
   })
-  // res.render('profile', {
-  //   name: data.name,
-  //   email: data.email,
-  //   address: data.address,
-  //   age: data.age,
-  //   gender: data.gender
-  // })
+
 } 
 
 
+function checkIn(pos) {
+  fetch('/map', {
+    headers: {
+      'Content-Type': 'application/json',
+      // 'x-access-token': localStorage.token
+    },
+    method: 'POST',
+    body: JSON.stringify(pos)
+  }).then(function(res) {
+    if (!res.ok) {
+      res.text()
+      .then(function(message) {
+        alert(message)
+      })
+    }
+    res.json()
+    .then(function(user) {
+      login()
+      window.location = '/map'
+    })
+  }).catch(function(err) {
+    console.log(err)
+  })
+}
 
 function addFriend() {
   var decodedToken = JSON.parse(atob(localStorage.token.split('.')[1]))
