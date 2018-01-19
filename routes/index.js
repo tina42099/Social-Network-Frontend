@@ -29,20 +29,29 @@ router.post('/login', (req, res, next) => {
   }).pipe(res)
 })
 
-router.get('/profile', (req, res, next) => {
-	return res.render('profile')
-})
+// router.get('/profile', (req, res, next) => {
+// 	return res.render('profile')
+// })
 
 
-router.get('/profile/:id', (req, res, next) => {
-	request.get({ 
-		url: config.apiUrl + '/profile/' + req.params.value,
-		headers: { 'x-access-token': req.headers['x-access-token']}
-	}).pipe(res)
-  	return res.render('profile')
-})
+// router.get('/profile/:id', (req, res, next) => {
+// 	request.get({ 
+// 		url: config.apiUrl + '/profile/' + req.params.value,
+// 		headers: { 'x-access-token': req.headers['x-access-token']}
+// 	}).pipe(res)
+//   	return res.render('profile')
+// })
 
 router.get('/map', (req, res, next) => {
+  // request.get({ 
+  //   url: config.apiUrl + '/users/seeFriends',
+  //   headers: { 'x-access-token': req.headers['x-access-token']}
+  // }, (err, response, body) => {
+  //   if (err) return next(err)
+  //   if (!body) return next(new Error('Missing body ' + body))
+  //   friends = JSON.parse(body)
+  //   return res.render('map', { friends: friends })
+  // })
   return res.render('map')
 })
 
@@ -51,6 +60,13 @@ router.post('/map', (req, res, next) => {
 		url: config.apiUrl + '/users/checkIn',
 		form: req.body
 	}).pipe(res)
+})
+
+router.put('/map', (req, res, next) => {
+  request.put({
+    url: config.apiUrl + '/users/checkOut',
+    form: req.body
+  }).pipe(res)
 })
 
 router.get('/city', (req, res, next) => {

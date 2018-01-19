@@ -9,8 +9,6 @@ block content
     meta(charset='utf-8')
     title Places Searchbox
     style.
-      /* Always set the map height explicitly to define the size of the div
-      * element that contains the map. */
       #map {
         height: 100%;
       }
@@ -88,11 +86,12 @@ block content
       }
   body
     input#pac-input.controls(type='text', placeholder='Search Box')
-    button#submit_map(type='submit') Check In
+    button#check_in(type='submit' value="checkIn") Check In
     #map
     script.
 
       var map, infoWindow, startMarker;
+      //- var friends = <%- friends %>
       function initAutocomplete() {
         map = new google.maps.Map(document.getElementById('map'), {
           center: {lat: 37.0902, lng: -95.7129},
@@ -101,7 +100,7 @@ block content
         });
 
         var infoWindow = new google.maps.InfoWindow;
-        var check_in_pos
+        var check_in_pos;
 
         // Try HTML5 geolocation.
         if (navigator.geolocation) {
@@ -113,22 +112,36 @@ block content
             };
             check_in_pos = pos
             startMarker = new google.maps.Marker({
-            map: map,
-            position: pos,
-            title: 'You are Here'
+              map: map,
+              position: pos,
+              title: 'You are Here'
             });
 
             infoWindow.setPosition(pos);
-            infoWindow.setContent('You are here');
+
+            //- var content =   "<div id='window'>"+
+            //-     "<p>You are here</p>"+
+            //-     "<button onclick='checkIn(\'"+check_in_pos+"\')'>Check In</button>" +
+            //-     "</div>"
+            //- infoWindow.setContent('<p>You are here</p>' + '<button id=submit_map>Check In</button>');
+            infoWindow.setContent('You Are Here');
             infoWindow.open(map);
             map.setCenter(pos);
             map.setZoom(18)
           }, function() {
             handleLocationError(true, infoWindow, map.getCenter());
           })
-          document.getElementById('submit_map').addEventListener('click', function(){
-            console.log(check_in_pos)
-            checkIn(check_in_pos);
+          document.getElementById('check_in').addEventListener('click', function(){
+            if (this.innerHTML == "Check In") {
+              checkIn(check_in_pos);
+              this.innerHTML = "Check Out";
+              infoWindow.setContent('You Are Checked In!')
+            }
+            else {
+              checkOut();
+              this.innerHTML = "Check In";
+              infoWindow.setContent("You Are Here")
+            }
           })
         } else {
             // Browser doesn't support Geolocation
@@ -137,8 +150,10 @@ block content
 
         // Create the search box and link it to the UI element.
         var input = document.getElementById('pac-input');
+        var check_in = document.getElementById('check_in');
         var searchBox = new google.maps.places.SearchBox(input);
         map.controls[google.maps.ControlPosition.TOP_CENTER].push(input);
+        map.controls[google.maps.ControlPosition.TOP_LEFT].push(check_in);
         // Bias the SearchBox results towards current map's viewport.
         map.addListener('bounds_changed', function() {
           searchBox.setBounds(map.getBounds());
@@ -164,7 +179,7 @@ block content
             console.log("Returned place contains no geometry");
             return;
           }
-          var icon = {
+          var place_icon = {
             url: place.icon,
             size: new google.maps.Size(71, 71),
             origin: new google.maps.Point(0, 0),
@@ -174,7 +189,7 @@ block content
         // Create a marker for each place.
           markers.push(new google.maps.Marker({
             map: map,
-            icon: icon,
+            icon: place_icon,
             title: place.name,
             position: place.geometry.location
           }));
@@ -184,6 +199,7 @@ block content
           } else {
             bounds.extend(place.geometry.location);
           }
+        
         });
         map.fitBounds(bounds);
         });
@@ -196,6 +212,9 @@ block content
                             'Error: Your browser doesn\'t support geolocation.');
         infoWindow.open(map);
       } 
+
+      
+      
 
     script(src='https://maps.googleapis.com/maps/api/js?key=AIzaSyDnLW1czivMAJWi5LxMmX4LlO3XYzql9aU&libraries=places&callback=initAutocomplete', async='', defer='')
 

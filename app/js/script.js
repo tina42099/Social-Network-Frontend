@@ -13,7 +13,8 @@ function register() {
 
   fetch('/register', {
     headers: {
-      'Content-Type': 'application/json'
+      'Content-Type': 'application/json',
+      //'x-access-token': localStorage.token
     },
     method: 'POST',
     body: JSON.stringify(data)
@@ -26,7 +27,6 @@ function register() {
     }
     res.json()
     .then(function(user) {
-      //alert(JSON.stringify(user))
       login()
       window.location = '/map'
     })
@@ -44,7 +44,7 @@ function login() {
   fetch('/login', {
     headers: {
       'Content-Type': 'application/json',
-      'x-access-token': localStorage.token
+      // 'x-access-token': localStorage.token
     },
     method: 'POST',
     body: JSON.stringify(data)
@@ -57,7 +57,9 @@ function login() {
     }
     res.json()
     .then(function(data) {
+      localStorage._id = data.userId
       localStorage.token = data.token
+      console.log(localStorage._id)
       window.location = '/map'
     })
   }).catch(function(err) {
@@ -65,13 +67,40 @@ function login() {
   })
 } 
 
-
-function checkIn(pos) {
-  pos.id = localStorage.id
-  fetch('/map', {
+function logout() {
+  var data = { _id: localStorage._id }
+  fetch('/logout', {
     headers: {
       'Content-Type': 'application/json',
       // 'x-access-token': localStorage.token
+    },
+    method: 'POST',
+    body: JSON.stringify(data)
+  }).then(function(res) {
+    console.log(res)
+    if (!res.ok) {
+      res.text().then(function(message) {
+        alert(message)
+      })
+    }
+    res.json()
+    .then(function(data) {
+      localStorage.clear()
+      window.location = '/login'
+    })
+  }).catch(function(err) {
+    console.error(err)
+  })
+  return
+}
+
+
+function checkIn(pos) {
+  pos.id = localStorage._id
+  fetch('/map', {
+    headers: {
+      'Content-Type': 'application/json',
+      //'x-access-token': localStorage.token
     },
     method: 'POST',
     body: JSON.stringify(pos)
@@ -89,6 +118,34 @@ function checkIn(pos) {
     })
   }).catch(function(err) {
     console.log(err)
+  })
+}
+
+function checkOut() {
+  var data = {
+    id: localStorage._id
+  }
+  fetch('/map', {
+      headers: {
+        'Content-Type': 'application/json',
+        'x-access-token': localStorage.token
+      },
+      method: 'PUT',
+      body: JSON.stringify(data)
+    }).then(function(res) {
+      if (!res.ok) {
+        res.text()
+        .then(function(message) {
+          alert(message)
+        })
+      }
+      res.json()
+      .then(function(user) {
+        login()
+        window.location = '/map'
+      })
+    }).catch(function(err) {
+      console.log(err)
   })
 }
 
