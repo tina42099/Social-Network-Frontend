@@ -30,7 +30,7 @@ function register() {
       localStorage._id = data.userId
       localStorage.token = data.token
       console.log(localStorage._id)
-      window.location = '/map/' + localStorage._id
+      window.location = '/login'
     })
   }).catch(function(err) {
     console.error(err)
@@ -95,14 +95,15 @@ function logout() {
   // }).catch(function(err) {
   //   console.error(err)
   // })
-  // return
+  return
   localStorage.clear()
   window.location = '/'
 }
 
 
 function checkIn(pos) {
-  //pos = {lat: 41.4620332, lng: -73.1182936}
+  //console.log(pos)
+  pos = {lat: 42.3731, lng: -71.118867}
   pos.id = localStorage._id
   fetch('/map', {
     headers: {
@@ -120,8 +121,7 @@ function checkIn(pos) {
     }
     res.json()
     .then(function(user) {
-      login()
-      window.location = '/map'
+      window.location = '/map/' + localStorage._id
     })
   }).catch(function(err) {
     console.log(err)
@@ -149,7 +149,7 @@ function checkOut() {
       res.json()
       .then(function(user) {
         login()
-        window.location = '/map'
+        window.location = '/map/' + localStorage._id
       })
     }).catch(function(err) {
       console.log(err)
@@ -182,7 +182,7 @@ function addFriend() {
     }
     res.json()
     .then(function(data) {
-      window.location = '/map'
+      window.location = window.location = '/map/' + localStorage._id
     })
   }).catch(function(err) {
     console.error(err)
@@ -258,7 +258,7 @@ function addInterests() {
     }
     res.json()
     .then(function(data) {
-      window.location = '/map'
+      window.location = '/map/' + localStorage._id
     })
   }).catch(function(err) {
     console.error(err)

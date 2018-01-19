@@ -10,7 +10,7 @@ block content
     title Places Searchbox
     style.
       #map {
-        height: 100%;
+        height: 850px;
       }
 
       #submit_map {
@@ -84,6 +84,15 @@ block content
       #target {
         width: 345px;
       }
+      #check_in {
+        bottom: 0;
+        left: 0;
+        width: 100px;
+        height: 50px;
+        background-color: rgba(25, 219, 151, 1);
+        font-size: 20px;
+        margin-bottom: 150px;
+      }
   body
     input#pac-input.controls(type='text', placeholder='Search Box')
     button#check_in(type='submit' value="checkIn") Check In
@@ -93,10 +102,11 @@ block content
       //f(#{friends})
 
       var map, infoWindow, startMarker;
+      var info;
       var friends = '#{friends}'
-      console.log("friends0", friends[0])
       function initAutocomplete() {
         friends = JSON.parse(friends.replace(/&quot;/gi, '"'))
+        console.log(friends)
         console.log("friends", friends)
         map = new google.maps.Map(document.getElementById('map'), {
           center: {lat: 37.0902, lng: -95.7129},
@@ -104,7 +114,7 @@ block content
           mapTypeId: 'roadmap'
         });
 
-        var infoWindow = new google.maps.InfoWindow;
+        infoWindow = new google.maps.InfoWindow;
         var check_in_pos;
         //- if (localStorage._id) {
         //-   seeFriends()
@@ -126,12 +136,6 @@ block content
             });
 
             infoWindow.setPosition(pos);
-
-            //- var content =   "<div id='window'>"+
-            //-     "<p>You are here</p>"+
-            //-     "<button onclick='checkIn(\'"+check_in_pos+"\')'>Check In</button>" +
-            //-     "</div>"
-            //- infoWindow.setContent('<p>You are here</p>' + '<button id=submit_map>Check In</button>');
             infoWindow.setContent('You Are Here');
             infoWindow.open(map);
             map.setCenter(pos);
@@ -157,23 +161,57 @@ block content
         }
 
         function displayOtherUsers(users, map) {
-          console.log("friends2", users)
-          console.log("users1", users[1])
-          var friend_infoWindow = new google.maps.InfoWindow();
+          info = new google.maps.InfoWindow();
           var marker, i;
-          for (i = 0; i < users.length; i++) {  
-            marker = new google.maps.Marker({
-              position: new google.maps.LatLng(users[i].location.lat, users[i].location.lng),
-              map: map,
-              title: users[i].name
-            });
-
-            google.maps.event.addListener(marker, 'click', (function(marker, i) {
-              return function() {
-                friend_infowindow.setContent(users[i].name);
-                friend_infowindow.open(map, marker);
+          for (i = 0; i < users.length; i++) {
+            console.log(users[i])  
+            if (users[i].activity == true) {
+              icon = {
+                  url: 'http://image.flaticon.com/icons/svg/252/252025.svg',
+                  //size: new google.maps.Size(45, 45),
+                  scaledSize: new google.maps.Size(45, 45),
+                  origin: new google.maps.Point(0, 0),
+                  anchor: new google.maps.Point(17, 34),
+                  labelOrigin: new google.maps.Point(23, 55)
               }
-            })(marker, i));
+            }
+            else {
+              icon = {
+                  url: 'https://image.flaticon.com/icons/svg/33/33622.svg',
+                  //size: new google.maps.Size(45, 45),
+                  scaledSize: new google.maps.Size(45, 45),
+                  origin: new google.maps.Point(0, 0),
+                  anchor: new google.maps.Point(17, 34),
+                  labelOrigin: new google.maps.Point(23, 55)
+              }
+            }
+            marker = new google.maps.Marker({
+              position: new google.maps.LatLng(parseFloat(users[i].location.lat), parseFloat(users[i].location.lng)),
+              map: map, 
+              title: users[i].check_in,
+              icon: icon,
+              //- icon: {
+              //-     url: 'http://image.flaticon.com/icons/svg/252/252025.svg',
+              //-     //size: new google.maps.Size(45, 45),
+              //-     scaledSize: new google.maps.Size(45, 45),
+              //-     origin: new google.maps.Point(0, 0),
+              //-     anchor: new google.maps.Point(17, 34),
+              //-     labelOrigin: new google.maps.Point(23, 55)
+              //- },
+              label: {
+                text: users[i].name,
+                fontWeight: 'bold',
+                fontSize: '14px',
+              }
+            })
+            marker.addListener('click', (function(marker) {
+               console.log("heyy") 
+                //var content = users[i].name;  
+                var content = "hi";
+                info.setContent(content);  
+                info.open(map, marker); 
+                console.log("byee")  
+            }));  
           }
         }
 
@@ -184,7 +222,7 @@ block content
         var check_in = document.getElementById('check_in');
         var searchBox = new google.maps.places.SearchBox(input);
         map.controls[google.maps.ControlPosition.TOP_CENTER].push(input);
-        map.controls[google.maps.ControlPosition.TOP_LEFT].push(check_in);
+        map.controls[google.maps.ControlPosition.BOTTOM_CENTER].push(check_in);
         // Bias the SearchBox results towards current map's viewport.
         map.addListener('bounds_changed', function() {
           searchBox.setBounds(map.getBounds());
@@ -205,22 +243,6 @@ block content
         markers = [];
         // For each place, get the icon, name and location.
         var bounds = new google.maps.LatLngBounds();
-
-        //- var friend_infoWindow = new google.maps.InfoWindow();
-        //-   var friend_marker, i;
-        //-   for (i = 0; i < friends.length; i++) {  
-        //-     friend_marker = new google.maps.Marker({
-        //-       position: new google.maps.LatLng(friends[i].location.lat, friends[i].location.lng),
-        //-       map: map
-        //-     });
-
-        //-     google.maps.event.addListener(friend_marker, 'click', (function(friend_marker, i) {
-        //-       return function() {
-        //-         friend_infowindow.setContent(friends[i].name);
-        //-         friend_infowindow.open(map, friend_marker);
-        //-       }
-        //-     })(friend_marker, i));
-        //-   }
 
         places.forEach(function(place) {
           if (!place.geometry) {
@@ -260,6 +282,31 @@ block content
                             'Error: Your browser doesn\'t support geolocation.');
         infoWindow.open(map);
       } 
+
+      //- function showInfo(marker, content)
+      //- {
+      //-     infoWindow = 
+      //-     // Start div
+      //-     let div = "<div id='info'>";
+      //-     if (typeof(content) == "undefined")
+      //-     {
+      //-         // http://www.ajaxload.info/
+      //-         div += "<img alt='loading' src='/static/ajax-loader.gif'/>";
+      //-     }
+      //-     else
+      //-     {
+      //-         div += content;
+      //-     }
+
+      //-     // End div
+      //-     div += "</div>";
+
+      //-     // Set info window's content
+      //-     info.setContent(div);
+
+      //-     // Open info window (if not already open)
+      //-     info.open(map, marker);
+      //- }
 
       //- function displayOtherUsers(users, map) {
       //-   console.log("friends2", users)
