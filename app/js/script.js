@@ -36,10 +36,12 @@ function register() {
 }
 
 function login() {
+  console.log("logging in")
   var data = {
     email: form.email.value,
     password: form.password.value
   }
+  console.log(data)
 
   fetch('/login', {
     headers: {
@@ -68,30 +70,32 @@ function login() {
 } 
 
 function logout() {
-  var data = { _id: localStorage._id }
-  fetch('/logout', {
-    headers: {
-      'Content-Type': 'application/json',
-      // 'x-access-token': localStorage.token
-    },
-    method: 'POST',
-    body: JSON.stringify(data)
-  }).then(function(res) {
-    console.log(res)
-    if (!res.ok) {
-      res.text().then(function(message) {
-        alert(message)
-      })
-    }
-    res.json()
-    .then(function(data) {
-      localStorage.clear()
-      window.location = '/login'
-    })
-  }).catch(function(err) {
-    console.error(err)
-  })
-  return
+  // var data = { _id: localStorage._id }
+  // fetch('/logout', {
+  //   headers: {
+  //     'Content-Type': 'application/json',
+  //     // 'x-access-token': localStorage.token
+  //   },
+  //   method: 'POST',
+  //   body: JSON.stringify(data)
+  // }).then(function(res) {
+  //   console.log(res)
+  //   if (!res.ok) {
+  //     res.text().then(function(message) {
+  //       alert(message)
+  //     })
+  //   }
+  //   res.json()
+  //   .then(function(data) {
+  //     localStorage.clear()
+  //     window.location = '/login'
+  //   })
+  // }).catch(function(err) {
+  //   console.error(err)
+  // })
+  // return
+  localStorage.clear()
+  window.location = '/'
 }
 
 
@@ -150,7 +154,6 @@ function checkOut() {
 }
 
 function addFriend() {  
-  console.log("localStorage" + JSON.stringify(localStorage))
   var decodedToken = JSON.parse(atob(localStorage.token.split('.')[1]))
 
   var data = {
@@ -160,7 +163,6 @@ function addFriend() {
   var url = window.location.href
   var url_parts = url.replace(/\/\s*$/,'').split('/'); 
   url_parts.shift(); 
-  console.log(url_parts)
 
   fetch('/users/' + url_parts[3] + '/id', {
     headers: {
@@ -170,7 +172,6 @@ function addFriend() {
     method: 'POST',
     body: JSON.stringify(data)
   }).then(function(res) {
-    console.log(res)
     if (!res.ok) {
       res.text().then(function(message) {
         alert(message)
@@ -186,16 +187,16 @@ function addFriend() {
 }
 
 function addInterests() {
-  var data = {
-    interests: form.interests.value 
-  }
+  
+  const interests = Array.from(form.interest).filter(function(entry) {
+    return entry.checked
+  }).map(function(entry) {
+    return entry.value
+  })
 
-  var values = [];
-  var cbs = document.forms['interests'].elements['interest'];
-  for(var i=0,cbLen=cbs.length;i<cbLen;i++){
-    if(cbs[i].checked){
-      values.push(cbs[i].value);
-    } 
+  console.log(interests)
+  var data = {
+    interests: interests
   }
 
   var decodedToken = JSON.parse(atob(localStorage.token.split('.')[1]))
@@ -203,7 +204,7 @@ function addInterests() {
 
   var data = {
     userId: decodedToken.id,
-    interests: values
+    interests: interests
   }
 
 
