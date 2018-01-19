@@ -41,18 +41,21 @@ router.post('/login', (req, res, next) => {
 // 	}).pipe(res)
 //   	return res.render('profile')
 // })
-
 router.get('/map', (req, res, next) => {
-  // request.get({ 
-  //   url: config.apiUrl + '/users/seeFriends',
-  //   headers: { 'x-access-token': req.headers['x-access-token']}
-  // }, (err, response, body) => {
-  //   if (err) return next(err)
-  //   if (!body) return next(new Error('Missing body ' + body))
-  //   friends = JSON.parse(body)
-  //   return res.render('map', { friends: friends })
-  // })
   return res.render('map')
+})
+
+router.get('/map/:userId', (req, res, next) => {
+  request.get({ 
+    url: config.apiUrl + '/users/seeFriends/' + req.params.userId,
+    headers: { 'x-access-token': req.headers['x-access-token']}
+  }, (err, response, body) => {
+    if (err) return next(err)
+    if (!body) return next(new Error('Missing body ' + body))
+    friends = JSON.parse(body)
+    return res.render('map', { friends: friends })
+  })
+  //return res.render('map')
 })
 
 router.post('/map', (req, res, next) => {
