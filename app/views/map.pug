@@ -88,11 +88,16 @@ block content
     input#pac-input.controls(type='text', placeholder='Search Box')
     button#check_in(type='submit' value="checkIn") Check In
     #map
+      //- (onload='initAutocomplete(\'+ friends +\')')
     script.
+      //f(#{friends})
 
       var map, infoWindow, startMarker;
-      //- var friends = <%- friends %>
+      var friends = '#{friends}'
+      console.log("friends0", friends[0])
       function initAutocomplete() {
+        friends = JSON.parse(friends.replace(/&quot;/gi, '"'))
+        console.log("friends", friends)
         map = new google.maps.Map(document.getElementById('map'), {
           center: {lat: 37.0902, lng: -95.7129},
           zoom: 5,
@@ -151,6 +156,29 @@ block content
           handleLocationError(false, infoWindow, map.getCenter());
         }
 
+        function displayOtherUsers(users, map) {
+          console.log("friends2", users)
+          console.log("users1", users[1])
+          var friend_infoWindow = new google.maps.InfoWindow();
+          var marker, i;
+          for (i = 0; i < users.length; i++) {  
+            marker = new google.maps.Marker({
+              position: new google.maps.LatLng(users[i].location.lat, users[i].location.lng),
+              map: map,
+              title: users[i].name
+            });
+
+            google.maps.event.addListener(marker, 'click', (function(marker, i) {
+              return function() {
+                friend_infowindow.setContent(users[i].name);
+                friend_infowindow.open(map, marker);
+              }
+            })(marker, i));
+          }
+        }
+
+        displayOtherUsers(friends, map)
+
         // Create the search box and link it to the UI element.
         var input = document.getElementById('pac-input');
         var check_in = document.getElementById('check_in');
@@ -177,6 +205,23 @@ block content
         markers = [];
         // For each place, get the icon, name and location.
         var bounds = new google.maps.LatLngBounds();
+
+        //- var friend_infoWindow = new google.maps.InfoWindow();
+        //-   var friend_marker, i;
+        //-   for (i = 0; i < friends.length; i++) {  
+        //-     friend_marker = new google.maps.Marker({
+        //-       position: new google.maps.LatLng(friends[i].location.lat, friends[i].location.lng),
+        //-       map: map
+        //-     });
+
+        //-     google.maps.event.addListener(friend_marker, 'click', (function(friend_marker, i) {
+        //-       return function() {
+        //-         friend_infowindow.setContent(friends[i].name);
+        //-         friend_infowindow.open(map, friend_marker);
+        //-       }
+        //-     })(friend_marker, i));
+        //-   }
+
         places.forEach(function(place) {
           if (!place.geometry) {
             console.log("Returned place contains no geometry");
@@ -216,9 +261,31 @@ block content
         infoWindow.open(map);
       } 
 
-      
-      
+      //- function displayOtherUsers(users, map) {
+      //-   console.log("friends2", users)
+      //-   var infoWindow = new google.maps.InfoWindow();
+      //-   var marker, i;
+      //-   for (i = 0; i < users.length; i++) {  
+      //-     marker = new google.maps.Marker({
+      //-       position: new google.maps.LatLng(users[i].location.lat, users[i].location.lng),
+      //-       map: map
+      //-     });
 
+      //-     google.maps.event.addListener(marker, 'click', (function(marker, i) {
+      //-       return function() {
+      //-         infowindow.setContent(users[i].name);
+      //-         infowindow.open(map, marker);
+      //-       }
+      //-     })(marker, i));
+      //-   }
+      //- }
+      
     script(src='https://maps.googleapis.com/maps/api/js?key=AIzaSyDnLW1czivMAJWi5LxMmX4LlO3XYzql9aU&libraries=places&callback=initAutocomplete', async='', defer='')
+
+    //- block postscript
+    //-   script.
+    //-     var friends = '#{friends}'
+    //-   script(src='https://maps.googleapis.com/maps/api/js?key=AIzaSyDnLW1czivMAJWi5LxMmX4LlO3XYzql9aU&libraries=places&callback=initAutocomplete', async='', defer='')
+
 
 

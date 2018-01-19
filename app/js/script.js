@@ -102,6 +102,7 @@ function logout() {
 
 
 function checkIn(pos) {
+  //pos = {lat: 41.4620332, lng: -73.1182936}
   pos.id = localStorage._id
   fetch('/map', {
     headers: {
