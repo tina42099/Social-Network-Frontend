@@ -7,6 +7,9 @@ block content
 		h1  Name: #{user.name} - Age: #{user.age} - Gender: #{user.gender}
 		h3 Address: #{user.address}
 		h4 Interests: #{user.interests}
-		h4 Past Check-ins: #{user.check-ins}
+		h4 Past Check-ins: 
+			ul
+				each val in user.check_ins
+					li= val.place_name
 		h8 Friends: #{user.friends}
 		button#submit(type='button' onclick='addFriend()') Add Friends

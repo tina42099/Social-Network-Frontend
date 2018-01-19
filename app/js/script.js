@@ -14,7 +14,7 @@ function register() {
   fetch('/register', {
     headers: {
       'Content-Type': 'application/json',
-      //'x-access-token': localStorage.token
+      'x-access-token': localStorage.token
     },
     method: 'POST',
     body: JSON.stringify(data)
@@ -27,8 +27,10 @@ function register() {
     }
     res.json()
     .then(function(user) {
-      login()
-      window.location = '/map'
+      localStorage._id = data.userId
+      localStorage.token = data.token
+      console.log(localStorage._id)
+      window.location = '/map/' + localStorage._id
     })
   }).catch(function(err) {
     console.error(err)
@@ -46,7 +48,7 @@ function login() {
   fetch('/login', {
     headers: {
       'Content-Type': 'application/json',
-      // 'x-access-token': localStorage.token
+      'x-access-token': localStorage.token
     },
     method: 'POST',
     body: JSON.stringify(data)
@@ -62,7 +64,7 @@ function login() {
       localStorage._id = data.userId
       localStorage.token = data.token
       console.log(localStorage._id)
-      window.location = '/map'
+      window.location = '/map/' + localStorage._id
     })
   }).catch(function(err) {
     console.error(err)
@@ -183,6 +185,38 @@ function addFriend() {
     })
   }).catch(function(err) {
     console.error(err)
+  })
+}
+
+function seeFriends() {
+  // var data = {
+  //   id: localStorage._id
+  // }
+  if (!localStorage._id) {
+    alert('Not logged in')
+    window.location = '/'
+  }
+
+  fetch('/map/' + localStorage._id, {
+    headers: {
+      'Content-Type': 'application/json'
+     // 'x-access-token': localStorage.token
+    },
+    method: 'GET'
+  }).then(function(res) {
+    if (!res.ok) {
+      res.text()
+      .then(function(message) {
+        alert(message)
+      })
+    }
+    res.json()
+    .then(function(user) {
+      login()
+      //window.location = '/map'
+    })
+  }).catch(function(err) {
+    console.log(err)
   })
 }
 
